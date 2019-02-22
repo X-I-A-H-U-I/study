@@ -1,2 +1,0 @@
-# study
-only study 
