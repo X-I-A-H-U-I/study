@@ -1,0 +1,32 @@
+
+spring:
+  application:
+    name: ace-agent
+  boot:
+    admin:
+      client:
+        url: "http://localhost:8764"
+        username: admin
+        password: admin
+        instance:
+          metadata:
+            user.name: ${spring.security.user.name}
+            user.password: ${spring.security.user.password}
+
+server:
+  port: 8763
+
+  #注册中心的注册地址
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://127.0.0.1:8761/eureka/
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: ALWAYS

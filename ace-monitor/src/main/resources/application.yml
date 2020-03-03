@@ -1,0 +1,38 @@
+spring:
+  profiles:
+    active: secure
+  application:
+    name: ace-monitor
+  security:
+    user:
+      name: admin
+      password: admin
+
+server:
+  port: 8764
+
+eureka:
+  client:
+    registryFetchIntervalSeconds: 5 #eureka client刷新本地缓存时间
+    serviceUrl:
+      defaultZone: http://127.0.0.1:8761/eureka/
+  instance:
+    leaseRenewalIntervalInSeconds: 10  #表示eureka client发送心跳给server端的频率，默认为30秒
+    health-check-url-path: /actuator/health #健康检查的地址
+    prefer-ip-address: true
+    hostname: localhost
+    metadata-map:
+      user.name: ${spring.security.user.name}
+      user.password: ${spring.security.user.password}
+
+# 开启监控接口
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: ALWAYS
+
+

@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: ace-ui
+  thymeleaf:
+    mode: LEGACYHTML5
+    cache: false
+
+    #热部署启动
+  devtools:
+    restart:
+      enabled: true
+      additional-paths: src/main/java
+
+server:
+  port: 8766

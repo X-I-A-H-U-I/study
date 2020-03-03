@@ -1,0 +1,38 @@
+spring:
+  application:
+    name: ace-gate
+  thymeleaf:
+    mode: LEGACYHTML5
+    cache: false
+    prefix: classpath:/templates/
+    servlet:
+      content-type: text/html
+    encoding: utf-8
+
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://127.0.0.1:8761/eureka/
+  instance:
+    prefer-ip-address: true
+    hostname: localhost
+
+server:
+  port: 8765
+
+zuul:
+  #prefix: /sproxy
+  host:
+    connect-timeout-millis: 50000
+    socket-timeout-millis: 50000
+    connection-request-timeout-millis: 1
+  routes:
+    admin-ui: #随便定义，当不存在serviceId时，默认该值为serviceId（就是注册服务的名称，属性spring.application.name）
+      path: /admin/**
+      serviceId: ace-ui
+    admin-back:
+      path: /back/**
+      serviceId: ace-admin
+
+

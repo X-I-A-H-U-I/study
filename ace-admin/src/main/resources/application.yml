@@ -1,0 +1,103 @@
+spring:
+  application:
+    name: ace-admin
+  boot:
+    admin:
+      client:
+        url: "http://localhost:8764"
+        username: admin
+        password: admin
+        instance:
+          metadata:
+            user.name: ${spring.security.user.name}
+            user.password: ${spring.security.user.password}
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/micro_stock?useUnicode=true&characterEncoding=utf-8
+    username: micro_user
+    password: micro_user
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      # 初始化时建立物理连接的个数。初始化发生在显示调用 init 方法，或者第一次 getConnection 时
+      initialSize: 5
+      # 最小连接池数量
+      minIdle: 5
+      # 最大连接池数量
+      maxActive: 10
+      # 获取连接时最大等待时间，单位毫秒。配置了 maxWait 之后，缺省启用公平锁，并发效率会有所下降，如果需要可以通过配置 useUnfairLock 属性为 true 使用非公平锁。
+      maxWait: 60000
+      # Destroy 线程会检测连接的间隔时间，如果连接空闲时间大于等于 minEvictableIdleTimeMillis 则关闭物理连接。
+      timeBetweenEvictionRunsMillis: 60000
+      # 连接保持空闲而不被驱逐的最小时间
+      minEvictableIdleTimeMillis: 300000
+      # 用来检测连接是否有效的 sql 因数据库方言而差, 例如 oracle 应该写成 SELECT 1 FROM DUAL
+      validationQuery: SELECT 1
+      # 建议配置为 true，不影响性能，并且保证安全性。申请连接的时候检测，如果空闲时间大于 timeBetweenEvictionRunsMillis，执行 validationQuery 检测连接是否有效。
+      testWhileIdle: true
+      # 申请连接时执行 validationQuery 检测连接是否有效，做了这个配置会降低性能。
+      testOnBorrow: false
+      # 归还连接时执行 validationQuery 检测连接是否有效，做了这个配置会降低性能。
+      testOnReturn: false
+      # 是否自动回收超时连接
+      removeAbandoned: true
+      # 超时时间 (以秒数为单位)
+      remove-abandoned-timeout: 180
+      # WebStatFilter 用于采集 web-jdbc 关联监控的数据。
+      # 更多配置可参见: https://github.com/alibaba/druid/wiki/%E9%85%8D%E7%BD%AE_%E9%85%8D%E7%BD%AEWebStatFilter
+      web-stat-filter:
+        # 是否开启 WebStatFilter 默认是 true
+        enabled: true
+        # 需要拦截的 url
+        url-pattern: /*
+        # 排除静态资源的请求
+        exclusions: "*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*"
+
+      # Druid 内置提供了一个 StatViewServlet 用于展示 Druid 的统计信息。
+      # 更多配置可参见:https://github.com/alibaba/druid/wiki/%E9%85%8D%E7%BD%AE_StatViewServlet%E9%85%8D%E7%BD%AE
+      stat-view-servlet:
+        #是否启用 StatViewServlet 默认值 true
+        enabled: true
+        # 需要拦截的 url
+        url-pattern: /druid/*
+        # 允许清空统计数据
+        reset-enable: true
+        login-username: druid
+        login-password: druid
+
+    #热部署启动
+  devtools:
+    restart:
+      enabled: true
+      additional-paths: src/main/java
+
+server:
+  port: 8762
+
+  #注册中心的注册地址
+eureka:
+  instance:
+    leaseRenewalIntervalInSeconds: 10 #表示eureka client发送心跳给server端的频率，默认为30秒
+    health-check-url-path: /actuator/health #健康检查的地址（依赖spring-boot-starter-actuator）
+  client:
+    registryFetchIntervalSeconds: 5 #表示eureka client间隔多久去拉取服务注册信息，默认为30秒
+    serviceUrl:
+      defaultZone: http://127.0.0.1:8761/eureka/
+
+# mybatis 相关配置
+mybatis:
+  configuration:
+    # 当没有为参数提供特定的 JDBC 类型时，为空值指定 JDBC 类型。
+    # oracle 数据库建议配置为 JdbcType.NULL, 默认是 Other
+    jdbc-type-for-null: 'null'
+    # 是否打印 sql 语句 调试的时候可以开启
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: ALWAYS
+
