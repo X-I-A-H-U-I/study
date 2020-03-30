@@ -1,0 +1,30 @@
+spring:
+  http:
+    encoding:
+      force: true
+      charset: UTF-8
+  application:
+    name: ace-jwt
+
+  #热部署启动
+  devtools:
+    restart:
+      enabled: true
+      additional-paths: src/main/java
+
+server:
+  port: 8767
+
+# JWT动态参数配置
+jwt:
+  header: Authorization
+  secret: mySecret
+  expiration: 7200
+  tokenHead: Bearer
+  route:
+    authentication:
+      path: auth
+      refresh: refresh
+      token: token
+
+

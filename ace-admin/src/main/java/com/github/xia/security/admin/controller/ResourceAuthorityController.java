@@ -11,11 +11,11 @@ import org.springframework.stereotype.Controller;
  * </p>
  *
  * @author xia
- * @since 2020-03-02
+ * @since 2020-03-12
  */
 @Controller
-@RequestMapping("/baseGroup")
-public class BaseGroupController {
+@RequestMapping("/resourceAuthority")
+public class ResourceAuthorityController {
 
 }
 
