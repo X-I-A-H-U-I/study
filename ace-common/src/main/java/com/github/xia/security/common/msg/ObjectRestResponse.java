@@ -1,11 +1,7 @@
 package com.github.xia.security.common.msg;
 
 /**
- * @explain：
- * @author: XIA
- * @date: 2020-02-05
- * @since: JDK 1.8
- * @version: 1.0
+ * Created by Ace on 2017/6/11.
  */
 public class ObjectRestResponse<T> {
     boolean rel;

@@ -1,6 +1,7 @@
 /** index.js By Beginner Emain:zheng_jinfan@126.com HomePage:http://www.zhengjinfan.cn */
 
 var tab;
+var navbar;
 
 layui.config({
     base: 'js/',
@@ -8,8 +9,8 @@ layui.config({
 }).use(['element', 'layer', 'navbar', 'tab'], function () {
     var element = layui.element(),
         $ = layui.jquery,
-        layer = layui.layer,
-        navbar = layui.navbar();
+        layer = layui.layer;
+    navbar = layui.navbar();
     tab = layui.tab({
         elem: '.admin-nav-card' //设置选项卡容器
         ,
@@ -19,11 +20,11 @@ layui.config({
         //},
         contextMenu: true,
         onSwitch: function (data) {
-            console.log(data.id); //当前Tab的Id
-            console.log(data.index); //得到当前Tab的所在下标
-            console.log(data.elem); //得到当前的Tab大容器
-
-            console.log(tab.getCurrentTabId())
+            //console.log(data.id); //当前Tab的Id
+            //console.log(data.index); //得到当前Tab的所在下标
+            //console.log(data.elem); //得到当前的Tab大容器
+            //
+            //console.log(tab.getCurrentTabId())
         }
     });
     //iframe自适应
@@ -40,15 +41,23 @@ layui.config({
         spreadOne: true,
         elem: '#admin-navbar-side',
         cached: true,
-        data: navs
-		/*cached:true,
-		url: 'datas/nav.json'*/
+        //data: navs
+		cached:false,
+		url: '/admin/user/menu'
     });
     //渲染navbar
     navbar.render();
     //监听点击事件
     navbar.on('click(side)', function (data) {
         tab.tabAdd(data.field);
+    });
+    $.get("/admin/user/system",null,function(data){
+        var data = eval("("+data+")");
+        for(var i=0;i<data.length;i++){
+            $('#menuSys').append('<dd><a href="javascript:;" onclick="javascript:refreshMenu('+data[i].id+')"><i class="fa '+data[i].icon+'" aria-hidden="true"></i>  '+data[i].title+'</a></dd>');
+            $('#menuSysMobile').prepend('<dd><a href="javascript:;" onclick="javascript:refreshMenu('+data[i].id+')"><i class="fa '+data[i].icon+'" aria-hidden="true"></i> '+data[i].title+'</a></dd>');
+
+        }
     });
     //清除缓存
     $('#clearCached').on('click', function () {
@@ -133,7 +142,22 @@ layui.config({
         $('body').removeClass('site-mobile');
     });
 });
-
+function refreshMenu(parentId){
+//设置navbar
+    navbar.set({
+        spreadOne: true,
+        elem: '#admin-navbar-side',
+        cached: true,
+        //data: navs
+        cached:false,
+        url: '/admin/user/menu?parentId='+parentId
+    });
+    navbar.render();
+    //监听点击事件
+    navbar.on('click(side)', function (data) {
+        tab.tabAdd(data.field);
+    });
+}
 var isShowLock = false;
 function lock($, layer) {
     if (isShowLock)

@@ -2,22 +2,15 @@ package com.github.xia.security.common.service.impl;
 
 import com.github.xia.security.common.service.BaseService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import tk.mybatis.mapper.common.Mapper;
 
 import java.util.List;
 
-/**
- * @explain：数据基本增删改查操作实现
- * @author: XIA
- * @date: 2020-02-02
- * @since: JDK 1.8
- * @version: 1.0
- */
-public class BaseServiceImpl<M extends Mapper<T>,T> implements
-        BaseService<T> {
-
+public class BaseServiceImpl<M extends Mapper<T>, T> implements BaseService<T> {
     @Autowired
-    private M mapper;
+    protected M mapper;
+
 
     @Override
     public T selectOne(T entity) {
@@ -29,6 +22,11 @@ public class BaseServiceImpl<M extends Mapper<T>,T> implements
         return mapper.selectByPrimaryKey(id);
     }
 
+//    @Override
+//    public List<T> selectListByIds(List<Object> ids) {
+//        return mapper.selectByIds(ids);
+//    }
+
     @Override
     public List<T> selectList(T entity) {
         return mapper.select(entity);
@@ -38,6 +36,11 @@ public class BaseServiceImpl<M extends Mapper<T>,T> implements
     public List<T> selectListAll() {
         return mapper.selectAll();
     }
+
+//    @Override
+//    public Long selectCountAll() {
+//        return mapper.selectCount();
+//    }
 
     @Override
     public Long selectCount(T entity) {
@@ -73,4 +76,14 @@ public class BaseServiceImpl<M extends Mapper<T>,T> implements
     public void updateSelectiveById(T entity) {
         mapper.updateByPrimaryKeySelective(entity);
     }
+
+//    @Override
+//    public void deleteBatchByIds(List<Object> ids) {
+//        mapper.batchDeleteByIds(ids);
+//    }
+//
+//    @Override
+//    public void updateBatch(List<T> entitys) {
+//        mapper.batchUpdate(entitys);
+//    }
 }

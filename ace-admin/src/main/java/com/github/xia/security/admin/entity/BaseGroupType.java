@@ -1,14 +1,18 @@
 package com.github.xia.security.admin.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
 import java.time.LocalDate;
-import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
+import java.util.Date;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+
+import javax.persistence.Column;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 /**
  * <p>
@@ -22,11 +26,12 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @ApiModel(value="BaseGroupType对象", description="")
+@Table(name = "base_group_type")
 public class BaseGroupType implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @TableId(value = "id", type = IdType.AUTO)
+    @Id
     private Integer id;
 
     private String code;
@@ -35,20 +40,28 @@ public class BaseGroupType implements Serializable {
 
     private String description;
 
-    private LocalDate crtTime;
+    @Column(name = "crt_time")
+    private Date crtTime;
 
+    @Column(name = "crt_user")
     private String crtUser;
 
+    @Column(name = "crt_name")
     private String crtName;
 
+    @Column(name = "crt_host")
     private String crtHost;
 
-    private LocalDate updTime;
+    @Column(name = "upd_time")
+    private Date updTime;
 
+    @Column(name = "upd_user")
     private String updUser;
 
+    @Column(name = "upd_name")
     private String updName;
 
+    @Column(name = "upd_host")
     private String updHost;
 
     private String attr1;
@@ -66,6 +79,4 @@ public class BaseGroupType implements Serializable {
     private String attr7;
 
     private String attr8;
-
-
 }

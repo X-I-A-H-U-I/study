@@ -11,5 +11,16 @@ spring:
       enabled: true
       additional-paths: src/main/java
 
+  http:
+    encoding:
+      charset: UTF-8
+
+
 server:
   port: 8766
+
+  tomcat:
+    uri-encoding: UTF-8
+
+
+

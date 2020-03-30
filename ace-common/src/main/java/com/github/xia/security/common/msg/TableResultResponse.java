@@ -3,14 +3,12 @@ package com.github.xia.security.common.msg;
 import java.util.List;
 
 /**
- * @explain：
- * @author: XIA
- * @date: 2020-03-02
- * @since: JDK 1.8
- * @version: 1.0
+ * ${DESCRIPTION}
+ *
+ * @author wanghaobin
+ * @create 2017-06-14 22:40
  */
 public class TableResultResponse<T> {
-
     int total;
     List<T> rows;
 

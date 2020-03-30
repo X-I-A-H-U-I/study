@@ -1,14 +1,12 @@
 package com.github.xia.security.common.msg;
 
 /**
- * @explain：
- * @author: XIA
- * @date: 2020-02-02
- * @since: JDK 1.8
- * @version: 1.0
+ * ${DESCRIPTION}
+ *
+ * @author wanghaobin
+ * @create 2017-06-09 7:32
  */
-public class ListRestResponse<T>{
-
+public class ListRestResponse<T> {
     boolean rel;
     String msg;
     T result;

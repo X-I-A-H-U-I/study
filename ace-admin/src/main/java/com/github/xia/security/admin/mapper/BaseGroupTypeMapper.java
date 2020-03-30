@@ -1,7 +1,7 @@
 package com.github.xia.security.admin.mapper;
 
 import com.github.xia.security.admin.entity.BaseGroupType;
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import tk.mybatis.mapper.common.Mapper;
 
 /**
  * <p>
@@ -11,6 +11,6 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @author xia
  * @since 2020-03-02
  */
-public interface BaseGroupTypeMapper extends BaseMapper<BaseGroupType> {
+public interface BaseGroupTypeMapper extends Mapper<BaseGroupType> {
 
 }

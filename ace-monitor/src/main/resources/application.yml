@@ -5,8 +5,8 @@ spring:
     name: ace-monitor
   security:
     user:
-      name: admin
-      password: admin
+      name: monitor
+      password: monitor
 
 server:
   port: 8764

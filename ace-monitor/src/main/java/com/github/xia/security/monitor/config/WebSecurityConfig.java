@@ -12,14 +12,14 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
  * @since: JDK 1.8
  * @version: 1.0
  */
-@Configuration
-@EnableWebSecurity
+//@Configuration
+//@EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.formLogin().loginPage("/login").permitAll().and()
                 .logout().logoutUrl("/logout").and().authorizeRequests()
-                .antMatchers("/**/*.css", "/img/**", "/api/**") // 放开"/api/**"：为了给被监控端免登录注册
+                .antMatchers("/**/*.css", "/img/**", "/api/**")
                 .permitAll().and().authorizeRequests().antMatchers("/**").authenticated();
         http.csrf().disable();
         http.headers().frameOptions().disable();

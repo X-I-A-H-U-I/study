@@ -1,5 +1,6 @@
 package com.github.xia.security.gate.config;
 
+import com.github.xia.security.gate.service.GateUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -9,7 +10,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 /**
- * @explain：Security 禁止登陆
+ * @explain：Security 权限控制登录
  * @author: XIA
  * @date: 2020-02-24
  * @since: JDK 1.8
@@ -19,11 +20,13 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
+    @Autowired
+    private GateUserDetailsService detailsService;
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.formLogin().loginPage("/login").defaultSuccessUrl("/admin/index").permitAll().and()
-                .logout().logoutSuccessUrl("/login")
-                .invalidateHttpSession(true) .and().authorizeRequests()
+                .logout().logoutSuccessUrl("/login").invalidateHttpSession(true).and().authorizeRequests()
                 .antMatchers("/**/*.css", "/img/**", "/api/**", "/**/*.js")
                 .permitAll().and().authorizeRequests().antMatchers("/**").authenticated();
         http.csrf().disable();
@@ -31,17 +34,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.httpBasic();
     }
 
-    @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication()
-                .passwordEncoder(new BCryptPasswordEncoder())
-                .withUser("admin")
-                .password(new BCryptPasswordEncoder().encode("admin"))
-                .roles("USER");
-    }
-
-//    @Override
-//    protected void configure(HttpSecurity http) throws Exception {
-//        http.csrf().disable();
+//    @Autowired
+//    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+//        auth.inMemoryAuthentication()
+//                .passwordEncoder(new BCryptPasswordEncoder())
+//                .withUser("admin")
+//                .password(new BCryptPasswordEncoder().encode("admin"))
+//                .roles("USER");
 //    }
+
+    @Override
+    public void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(detailsService).passwordEncoder(new BCryptPasswordEncoder());
+    }
 }

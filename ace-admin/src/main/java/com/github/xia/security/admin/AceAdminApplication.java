@@ -1,19 +1,18 @@
 package com.github.xia.security.admin;
 
-import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
-import org.springframework.cloud.netflix.hystrix.EnableHystrix;
+import tk.mybatis.spring.annotation.MapperScan;
 
 /**
  * @author xiahui
  */
 @SpringBootApplication
 @EnableEurekaClient
-@EnableHystrix
-@MapperScan(basePackages = {"com.github.xia.security.admin.mapper"})
+@MapperScan(basePackages = {"com.github.xia.security.admin.mapper","com.github.xia.security.common"})
+@ServletComponentScan("com.github.xia.security.admin.config")
 public class AceAdminApplication {
 
     public static void main(String[] args) {

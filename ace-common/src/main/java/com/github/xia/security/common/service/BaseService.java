@@ -3,11 +3,10 @@ package com.github.xia.security.common.service;
 import java.util.List;
 
 /**
- * @explain：数据增删改查基本操作
- * @author: XIA
- * @date: 2020-02-02
- * @since: JDK 1.8
- * @version: 1.0
+ * ${DESCRIPTION}
+ *
+ * @author wanghaobin
+ * @create 2017-06-08 16:26
  */
 public interface BaseService<T> {
     /**
@@ -110,4 +109,19 @@ public interface BaseService<T> {
      * @param entity
      */
     void updateSelectiveById(T entity);
+
+    /**
+     * 根据ID集合批量删除
+     *
+     * @param ids
+     */
+//    void deleteBatchByIds(List<Object> ids);
+
+
+    /**
+     * 批量更新
+     *
+     * @param entitys
+     */
+//    void updateBatch(List<T> entitys);
 }

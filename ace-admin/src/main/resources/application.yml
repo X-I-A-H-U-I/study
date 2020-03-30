@@ -1,16 +1,18 @@
 spring:
   application:
     name: ace-admin
-  boot:
-    admin:
-      client:
-        url: "http://localhost:8764"
-        username: admin
-        password: admin
-        instance:
-          metadata:
-            user.name: ${spring.security.user.name}
-            user.password: ${spring.security.user.password}
+
+#  boot:
+#    admin:
+#      client:
+#        url: "http://localhost:8764"
+#        username: monitor
+#        password: monitor
+#        instance:
+#          metadata:
+#            user.name: ${spring.security.user.name}
+#            user.password: ${spring.security.user.password}
+
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://127.0.0.1:3306/micro_stock?useUnicode=true&characterEncoding=utf-8
@@ -70,16 +72,41 @@ spring:
       enabled: true
       additional-paths: src/main/java
 
+  #redis配置
+  redis:
+    #redis数据库索引（默认0）
+    database: 0
+    #redis服务地址
+    host: localhost
+    #redis服务端口
+    port: 6379
+    #redis服务连接默密码(默认为空)
+    password: redis
+    lettuce:
+      pool:
+        #连接池最大连接数(使用负值表示没有限制)
+        max-active: 8
+        #连接池最大阻塞等待时间(使用负值表示没有限制)
+        max-wait: -1
+        #连接池中最大空闲连接
+        max-idle: 8
+        #连接池最小空闲连接
+        min-idle: 0
+      #连接超时时间(毫秒)
+    timeout: 12000
+  thymeleaf:
+    encoding: utf-8
+  http:
+    encoding:
+      charset: UTF-8
+
+
 server:
   port: 8762
 
   #注册中心的注册地址
 eureka:
-  instance:
-    leaseRenewalIntervalInSeconds: 10 #表示eureka client发送心跳给server端的频率，默认为30秒
-    health-check-url-path: /actuator/health #健康检查的地址（依赖spring-boot-starter-actuator）
   client:
-    registryFetchIntervalSeconds: 5 #表示eureka client间隔多久去拉取服务注册信息，默认为30秒
     serviceUrl:
       defaultZone: http://127.0.0.1:8761/eureka/
 
@@ -91,6 +118,8 @@ mybatis:
     jdbc-type-for-null: 'null'
     # 是否打印 sql 语句 调试的时候可以开启
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  mapper-locations: classpath:mapper/*.xml
+
 
 management:
   endpoints:
@@ -100,4 +129,3 @@ management:
   endpoint:
     health:
       show-details: ALWAYS
-

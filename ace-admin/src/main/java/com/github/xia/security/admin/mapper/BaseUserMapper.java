@@ -1,7 +1,10 @@
 package com.github.xia.security.admin.mapper;
 
 import com.github.xia.security.admin.entity.BaseUser;
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Param;
+import tk.mybatis.mapper.common.Mapper;
+
+import java.util.List;
 
 /**
  * <p>
@@ -11,6 +14,9 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @author xia
  * @since 2020-03-02
  */
-public interface BaseUserMapper extends BaseMapper<BaseUser> {
+public interface BaseUserMapper extends  Mapper<BaseUser> {
 
+    List<BaseUser> selectMemberByGroupId(@Param("groupId") int groupId);
+
+    List<BaseUser> selectLeaderByGroupId(@Param("groupId") int groupId);
 }

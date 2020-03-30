@@ -9,6 +9,30 @@ spring:
       content-type: text/html
     encoding: utf-8
 
+  #redis配置
+  redis:
+    #redis数据库索引（默认0）
+    database: 0
+    #redis服务地址
+    host: 127.0.0.1
+    #redis服务端口
+    port: 6379
+    #redis服务连接默密码(默认为空)
+    password: redis
+    lettuce:
+      pool:
+        #连接池最大连接数(使用负值表示没有限制)
+        max-active: 8
+        #连接池最大阻塞等待时间(使用负值表示没有限制)
+        max-wait: -1
+        #连接池中最大空闲连接
+        max-idle: 8
+        #连接池最小空闲连接
+        min-idle: 0
+      #连接超时时间(毫秒)
+      shutdown-timeout: 100
+    timeout: 12000
+
 
 eureka:
   client:
@@ -28,11 +52,29 @@ zuul:
     socket-timeout-millis: 50000
     connection-request-timeout-millis: 1
   routes:
-    admin-ui: #随便定义，当不存在serviceId时，默认该值为serviceId（就是注册服务的名称，属性spring.application.name）
+    cloud-ui: #随便定义，当不存在serviceId时，默认该值为serviceId（就是注册服务的名称，属性spring.application.name）
       path: /admin/**
       serviceId: ace-ui
-    admin-back:
+    cloud-back:
       path: /back/**
       serviceId: ace-admin
+    cloud-monitor:
+      path: /monitor/**
+      serviceId: ace-minitor
+    cloud-jwt:
+      path: /api/**
+      serviceId: ace-jwt
+
+
+
+
+
+gate:
+  ignore:
+    startWith: /back/menu/user,/admin/index,/admin/about
+    contain: .
+  oauth:
+    prefix: /api
+    
 
 
