@@ -1,9 +1,11 @@
 package com.github.xia.security.auth.service;
 
 import com.github.xia.security.api.feign.UserFeignClient;
+import com.github.xia.security.auth.domain.LoginUser;
 import com.github.xia.security.auth.domain.OauthUserFactory;
 import com.github.xia.security.common.util.DfUtils;
 import com.github.xia.security.common.vo.UserInfo;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -24,7 +26,8 @@ import org.springframework.stereotype.Service;
 public class AuthUserDetailService implements UserDetailsService {
 
     @Autowired
-    private UserFeignClient userFeignClient;
+    //private UserFeignClient userFeignClient;
+    private UserService userService;
 
     /**
      * Locates the user based on the username. In the actual implementation, the search
@@ -40,11 +43,13 @@ public class AuthUserDetailService implements UserDetailsService {
      */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UserInfo user = userFeignClient.getUserByUsername(username);
-        if (DfUtils.isBank(user)) {
+        LoginUser user = userService.getUserByUsername(username);
+        UserInfo userInfo = new UserInfo();
+        BeanUtils.copyProperties(user,userInfo);
+        if (DfUtils.isBank(userInfo)) {
             throw new UsernameNotFoundException(String.format("No user found with username '%s'.", username));
         } else {
-            return OauthUserFactory.createOauthUser(user);
+            return OauthUserFactory.createOauthUser(userInfo);
         }
     }
 }

@@ -69,6 +69,22 @@ spring:
     timeout: 12000
 
   #注册中心的注册地址
+  devtools:
+    remote:
+      restart:
+        enabled: true
+
+# mybatis 相关配置
+mybatis:
+  configuration:
+    # 当没有为参数提供特定的 JDBC 类型时，为空值指定 JDBC 类型。
+    # oracle 数据库建议配置为 JdbcType.NULL, 默认是 Other
+    jdbc-type-for-null: 'null'
+    # 是否打印 sql 语句 调试的时候可以开启
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  mapper-locations: classpath:mapper/*.xml
+
+
 eureka:
   client:
     serviceUrl:

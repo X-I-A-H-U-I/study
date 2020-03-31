@@ -64,17 +64,21 @@ zuul:
     cloud-jwt:
       path: /api/**
       serviceId: ace-jwt
+    cloud-auth:
+      path: /auth/**
+      serviceId: ace-oauth
 
+security:
+  oauth2:
+    client:
+      access-token-uri: http://localhost:${server.port}/auth/oauth/token
+      user-authorization-uri: http://localhost:${server.port}/auth/oauth/authorize
+      client-id: system
+      client-secret: 12345
 
+    resource:
+      user-info-uri: http://ace-oauth/user/userInfo
+      prefer-token-info: true
 
-
-
-gate:
-  ignore:
-    startWith: /back/menu/user,/admin/index,/admin/about
-    contain: .
-  oauth:
-    prefix: /api
-    
 
 

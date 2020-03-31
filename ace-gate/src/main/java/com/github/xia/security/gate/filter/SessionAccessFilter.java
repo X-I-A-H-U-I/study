@@ -38,7 +38,7 @@ import java.util.regex.Pattern;
  * @since: JDK 1.8
  * @version: 1.0
  */
-@Configuration
+//@Configuration
 public class SessionAccessFilter extends ZuulFilter {
 
     private final Logger log = LoggerFactory.getLogger(SessionAccessFilter.class);

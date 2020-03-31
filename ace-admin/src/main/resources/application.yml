@@ -2,17 +2,6 @@ spring:
   application:
     name: ace-admin
 
-#  boot:
-#    admin:
-#      client:
-#        url: "http://localhost:8764"
-#        username: monitor
-#        password: monitor
-#        instance:
-#          metadata:
-#            user.name: ${spring.security.user.name}
-#            user.password: ${spring.security.user.password}
-
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://127.0.0.1:3306/micro_stock?useUnicode=true&characterEncoding=utf-8
@@ -129,3 +118,14 @@ management:
   endpoint:
     health:
       show-details: ALWAYS
+
+security:
+  oauth2:
+    client:
+      client-id: system
+      client-secret: 12345
+
+    resource:
+      user-info-uri: http://ace-oauth/user/userInfo
+      prefer-token-info: true
+
